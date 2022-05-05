@@ -60,13 +60,6 @@ class Controller {
         if (!req.session.user) {
             return res.render('cadastrar');
         } else {
-            const grupo = GrupoUserModel.findAll({
-                attributes: ['grupo'],
-                where: {
-                    user: user
-                }
-            })
-            console.log(grupo);
             return res.render('index',{usuario: req.session.user}); 
         }
     }

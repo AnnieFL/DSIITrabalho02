@@ -1,20 +1,54 @@
-const { sequelize } = require('../config/connection-db');
-const { Model, DataTypes } = require('sequelize');
+class User {
+    constructor(id, email, nome, senha) {
+        this.id = id;
+        this.email = email;
+        this.nome = nome;
+        this.senha = senha;
+    }
+}
 
-class UserModel extends Model {}
-UserModel.init({
-    id : {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
-    email: DataTypes.STRING,
-    nome: DataTypes.STRING,
-    senha: DataTypes.STRING
-}, { sequelize, modelName: 'user' });
+// DAO = DATA ACCESS OBJECT
+class UserDAO {
 
-(async () => {
-    await sequelize.sync();
-})();
+    static async buscaPeloId(id) {
+        const sql = 'SELECT * FROM users WHERE id = $1';
+        const result = await dbcon.query(sql, [id]);
+        const grupo = result.rows[0];
+        return grupo;
+    }
 
-module.exports = { UserModel };
+    static async atualiza(user) {
+        const sql = `UPDATE users
+            SET email = $2, 
+                nome = $3,
+                senha = $4
+            WHERE id = $1;`;
+        const values = [user.id, user.email, user.nome, user.senha];
+        
+        try {
+            await dbcon.query(sql, values);
+            return true;
+        } catch (error) {
+            console.log({ error });
+            return false;
+        }
+    }
+
+    static async cadastrar(user) {
+          
+        const sql = 'INSERT INTO public.users (email, nome, senha) VALUES ($1, $2, $3);';
+        const values = [user.email, user.nome, user.senha];
+        
+        try {
+            await dbcon.query(sql, values);
+        } catch (error) {
+            console.log('NAO FOI POSSIVEL INSERIR');
+            console.log({ error });
+        }
+    }
+}
+
+module.exports = {
+    User,
+    UserDAO
+};
