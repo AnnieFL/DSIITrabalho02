@@ -1,3 +1,5 @@
+const { dbcon } = require("../config/connection-db");
+
 class User {
     constructor(id, email, nome, senha) {
         this.id = id;
@@ -13,8 +15,15 @@ class UserDAO {
     static async buscaPeloId(id) {
         const sql = 'SELECT * FROM users WHERE id = $1';
         const result = await dbcon.query(sql, [id]);
-        const grupo = result.rows[0];
-        return grupo;
+        const user = result.rows[0];
+        return user;
+    }
+
+    static async buscaPeloEmail(email) {
+        const sql = 'SELECT * FROM users WHERE email = $1';
+        const result = await dbcon.query(sql, [email]);
+        const user = result.rows[0];
+        return user;
     }
 
     static async atualiza(user) {

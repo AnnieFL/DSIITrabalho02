@@ -4,19 +4,21 @@ const { Controller } = require('../controllers/controller');
 
 const routes = Router();
 
-const controller = new controller();
+const controller = new Controller();
 
-//routes.get('/cadastrar', controller.mostraCadastro);
+routes.get('/grupo/:id', controller.grupo);
 
-//routes.get('/deletar/:id', controller.deletar);
+routes.get('/criarGrupo', controller.criarGrupo);
 
-routes.get('/', controller.listar);
+routes.get('/login', controller.login);
 
-//routes.get('/:id', controller.detalhar);
+routes.get('/', controller.index);
 
-//routes.post('/', controller.cadastrar);
 
-//routes.get('/alterar/:id', controller.mostraAlterar);
-//routes.post('/alterar/:id', controller.alterar);
+routes.post('/cadastrar', controller.cadastrar)
+
+routes.post('/criarGrupo', controller.criarGrupoPost);
+
+routes.post('/grupo', controller.enviarMensagem)
 
 module.exports = routes;

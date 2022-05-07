@@ -7,5 +7,17 @@
     <title>GroupChat</title>
 </head>
 <body>
+    <h1>INDEX</h1>
+    <%if (typeof grupos !== 'undefined') {%>
+        <table>
+            <%for (let i=0; i<grupos.length; i++) {%>
+            <tr>
+                <td><img src="<%=grupos[i].imagem%>" width="50px" height="50px"></td>
+                <td><a href="grupo/<%=grupos[i].id%>"><%=grupos[i].nome%></a></td>
+            </tr>
+            <%}%>
+        </table>
+    <%}%>
+    <a href="/criarGrupo">Criar grupo!</a>
 </body>
 </html>

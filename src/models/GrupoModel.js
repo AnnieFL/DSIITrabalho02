@@ -18,6 +18,23 @@ class GrupoDAO {
         return grupo;
     }
 
+    static async buscaPelosIds(ids) {
+        const grupos = [];
+        let results = null;
+        for (let i=0; i<ids.length; i++) {
+            const sql = 'SELECT * FROM grupos WHERE id = $1';
+            results = await dbcon.query(sql, [ids[i].grupo]);
+            grupos.push(results.rows[0]);
+        }
+        return grupos;
+    }
+
+    static async ultimoIdInserido() {
+        const sql = "SELECT IDENT_CURRENT('grupos')";
+        const result = await dbcon.query(sql);
+        return result.rows[0];
+    }
+
     static async atualiza(grupo) {
         const sql = `UPDATE grupos
             SET nome = $2, 
@@ -36,8 +53,8 @@ class GrupoDAO {
 
     static async cadastrar(grupo) {
           
-        const sql = 'INSERT INTO public.grupos (nome,imagem) VALUES ($1, $2);';
-        const values = [grupo.nome, grupo.imagem];
+        const sql = 'INSERT INTO public.grupos (id, nome,imagem) VALUES ($1, $2, $3);';
+        const values = [grupo.id, grupo.nome, grupo.imagem];
         
         try {
             await dbcon.query(sql, values);

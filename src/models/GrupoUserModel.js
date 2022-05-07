@@ -20,6 +20,12 @@ class GrupoUserDAO {
         return grupoUser;
     }
 
+    static async buscaPeloUser(user) {
+        const sql = `SELECT grupo FROM grupoUser WHERE "user" = $1`;
+        const result = await dbcon.query(sql, [user]);
+        return result.rows;
+    }
+
     static async atualiza(grupoUser) {
         const sql = `UPDATE grupoUser
             SET mudo = $2 
@@ -37,8 +43,8 @@ class GrupoUserDAO {
 
     static async cadastrar(grupoUser) {
           
-        const sql = 'INSERT INTO public.grupoUser (grupo,user,mudo,admin) VALUES ($1, $2, $3, $4);';
-        const values = [grupo.nome, grupo.imagem];
+        const sql = `INSERT INTO public.grupoUser(grupo,"user",mudo,"admin") VALUES ($1, $2, $3, $4);`;
+        const values = [grupoUser.grupo, grupoUser.user, grupoUser.mudo, grupoUser.admin];
         
         try {
             await dbcon.query(sql, values);

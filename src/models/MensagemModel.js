@@ -1,3 +1,5 @@
+const { dbcon } = require("../config/connection-db");
+
 class Mensagem {
     constructor(id, conteudo, autor, grupo, data) {
         this.id = id;
@@ -16,6 +18,13 @@ class MensagemDAO {
         const result = await dbcon.query(sql, [id]);
         const grupo = result.rows[0];
         return grupo;
+    }
+
+    static async dentroDoGrupo(grupoId) {
+        const sql = 'SELECT * FROM mensagens JOIN users ON mensagens.autor = users.id WHERE grupo = $1 ORDER BY mensagens.data DESC';
+        const result = await dbcon.query(sql,[grupoId]);
+        console.log(result.rows);
+        return result.rows;
     }
 
     static async atualiza(mensagen) {
@@ -40,6 +49,7 @@ class MensagemDAO {
           
         const sql = 'INSERT INTO public.mensagens (conteudo, autor, grupo, data) VALUES ($1, $2, $3, $4);';
         const values = [mensagem.conteudo, mensagem.autor, mensagem.grupo, mensagem.data];
+        console.log(mensagem.data);
         
         try {
             await dbcon.query(sql, values);
