@@ -1,28 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GroupChat</title>
-</head>
-<body>
-    <h1>GRUPO <%=grupo.nome%></h1>
-    <div>
-        <table>
+<%- include('includes/header') %>
+    <h1 class="center"><%=grupo.nome%><%if (user.admin) {%>
+        <a class='nonlink' style='color:red;' href="/apagar/<%=grupo.id%>" title="Apagar">X</a>
+    <%}%></h1>
+    <div class="complexcenter groupchat" style='height:600px; z-index:4; visibility: visible; overflow: auto;'>
             <%for (let i=0; i<mensagens.length; i++) {%>
+                <p <%if (mensagens[i].autor == user.id) {%> class='senderP'<%} else {%> class='receiverP' <%}%> style="font-size=xx-large;;">
+                    <br>
+                    <span <%if (mensagens[i].autor == user.id) {%> class='sender'<%} else {%> class='receiver' <%}%>>
+                        <%=mensagens[i].conteudo%><br>
+                        <span style="font-size:xx-small"><%=mensagens[i].nome%> | <%=mensagens[i].data.toLocaleString()%></span>
+                    </span>
+                    <br>
+                </p>
+                <%}%>
+                <br>
+                <form class="center" onsubmit="button.disabled = true; button.classList.toggle('button3'); button.classList.toggle('disabButton');" action="/grupo" method="post">
+                    <input name="conteudo" class="textArea" size=30 style='font-size: xx-large;' id="textArea">
+                    <input type="hidden" name="grupo" value="<%=grupo.id%>">
+                    <input type="submit" name='button' value=">" <%if (user.mudo) {%>disabled class="disabButton"<%} else {%> class="button3" <%}%>></form>
+            </div>
+    <div>
+        <h1>Membros:</h1>
+        <table>
             <tr>
-                <td style="font-size: 2em"><%=mensagens[i].conteudo%></td>
-                <td style="font-size: 1em"><%=mensagens[i].nome%> | <%=mensagens[i].data.toLocaleString()%></td>
+                    <td><b><%=user.nome%></b></td>
+                    <td><b><%=user.email%></b></td>  
+                    <td><b><%if (user.mudo) {%>(Mudo)<%} else if (user.admin){%>[ADMIN]<%}%></b></td>         
+                    <%if (user.admin) {%>
+                        <td></td>
+                    <%} else {%>
+                        <td><a class='nonlink' href="/sair/<%=user.grupoUser%>" title="Sair">🚪</a></td>
+                    <%}%>
             </tr>
+            <%for (let i=0; i<groupUsers.length; i++) {%>
+                <%if (groupUsers[i].id != user.id) {%>
+                    <tr>
+                        <td><%=groupUsers[i].nome%></td>
+                        <td><%=groupUsers[i].email%></td>
+                        <td><%if (groupUsers[i].mudo) {if (user.admin) {%><a class='nonlink' title='desmutar' href="/mutar/<%=groupUsers[i].grupoUser%>">[MUDO]</a><%} else {%>[MUDO]<%}} else if (groupUsers[i].admin){%>[ADMIN]<%} else if (user.admin) {%><a class="nonlink" title='mutar' href="/mutar/<%=groupUsers[i].grupoUser%>">[MEMBRO]</a><%} else {%>[MEMBRO]<%}%></td>
+                        <%if (user.admin) {%>
+                            <td><a class='nonlink' href="/sair/<%=groupUsers[i].grupoUser%>" title="Kickar">👢</a></td>
+                        <%} else {%>
+                            <td></td>
+                        <%}%>
+                    </tr>  
+                <%}%>
             <%}%>
         </table>
-        <form action="/grupo" method="post">
-            <textarea name="conteudo" cols="50" rows="5"></textarea>
-            <input type="hidden" name="grupo" value="<%=grupo.id%>">
-            <input type="submit" value="enviar"></form>
     </div>
-    
-    <a href="/">Voltar</a>
+    <%if (user.admin) {%>
+        <button class="fixedbutton button2" onclick="location.href='/ListaConvites/<%=grupo.id%>'">+</button>
+    <%}%>
+    <script>
+        window.onload = function() {
+            document.getElementById("textArea").focus();
+        }
+    </script><br><br>  
+    <a class='nonlink' style='font-size:20px;' href="/">< Voltar</a>
 </body>
 </html>

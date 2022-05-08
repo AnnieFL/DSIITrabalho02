@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GroupChat</title>
-</head>
-<body>
-    <form action="/criarGrupo" method="post">
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" placeholder="Nome do grupo"><br>
-        <label for="imagem">Link da imagem:</label>
-        <input type="text" name="imagem" placeholder="Link para a foto do grupo"><br>
-        <input type="submit" value="Criar"><br>
-    </form>
+<%- include('includes/header') %>
+    <div class="complexcenter login center">
+        <h1>Criar Grupo</h1>
+            <form action="/criarGrupo" method="post">
+                <input type="text" name="nome" placeholder="Nome do grupo"><br><br>
+                <input type="text" name="imagem" placeholder="Link para a foto do grupo"><br><br>
+                <input type="submit" value="Criar" class="button"><br>
+            </form>
+    </div>
+
 </body>
 </html>

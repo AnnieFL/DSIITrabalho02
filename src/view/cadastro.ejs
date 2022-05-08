@@ -1,35 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GroupChat</title>
-</head>
-<body>
+<%- include('includes/header') %>
     <%if (typeof login !== 'undefined') {%>
-        <%if (typeof erro !== 'undefined') {%>
-            <div>Erro no login, tente novamente!</div>
-        <%}%>
-        <form action="/cadastrar?login=true" method="post">
-            <label for="email">Email:</label>
-            <input type="email" name="email" placeholder="Seu email"><br>
-            <label for="senha">Senha:</label>
-            <input type="password" name="senha" placeholder="Sua senha"><br>
-            <input type="submit" value="Login"><br>
-        </form>
-        Não tem conta? <a href="/">cadastre-se</a>
+
+        <div class="complexcenter login center">
+            <%if (typeof erro !== 'undefined') {%>
+                <div class="erro">Erro no login, tente novamente!</div>
+            <%}%>
+            <h1>Login</h1>
+            <form action="/cadastrar?login=true" method="post">
+                <input type="email" name="email" placeholder="Email"><br><br>
+                <input type="password" name="senha" placeholder="Senha"><br><br>
+                <input type="submit" value="Login" class="button"><br>
+            </form>
+            Não tem conta? <a href="/">cadastre-se</a>
+        </div>
     <%} else {%>
-        <form action="/cadastrar" method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" placeholder="Seu nome"><br>
-            <label for="email">Email:</label>
-            <input type="email" name="email" placeholder="Seu email"><br>
-            <label for="senha">Senha:</label>
-            <input type="password" name="senha" placeholder="Sua senha"><br>
-            <input type="submit" value="Cadastrar"><br>
+        <div class="complexcenter login center">
+            <%if (typeof erro !== 'undefined') {%>
+                <%if (erro == 'invalido') {%>
+                    <div class="erro">Erro no cadastro, informações faltando!</div>
+                    <%} else {%>
+                        <div class="erro">Erro no cadastro, email já logado!</div>
+                <%}%>
+            <%}%>
+            <h1>Cadastrar</h1>
+            <form action="/cadastrar" method="post">
+            <input type="text" name="nome" placeholder="Nome"><br><br>
+            <input type="email" name="email" placeholder="Email"><br><br>
+            <input type="password" name="senha" placeholder="Senha"><br><br>
+            <input class='button' type="submit" value="Cadastrar"><br>
         </form>
         Já tem conta? <a href="/login">Faça Login</a>
+        </div>
     <%}%>
 </body>
 </html>

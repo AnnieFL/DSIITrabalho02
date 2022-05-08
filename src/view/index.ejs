@@ -1,23 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GroupChat</title>
-</head>
-<body>
-    <h1>INDEX</h1>
+<%- include('includes/header') %>
+<div class="complexcenter center">
+    <h1>Seus grupos:</h1>
     <%if (typeof grupos !== 'undefined') {%>
-        <table>
-            <%for (let i=0; i<grupos.length; i++) {%>
-            <tr>
-                <td><img src="<%=grupos[i].imagem%>" width="50px" height="50px"></td>
-                <td><a href="grupo/<%=grupos[i].id%>"><%=grupos[i].nome%></a></td>
-            </tr>
-            <%}%>
-        </table>
+        <div class="lista">
+            <table>
+                <%for (let i=0; i<grupos.length; i++) {%>
+                <tr onclick="location.href='grupo/<%=grupos[i].id%>'" style="cursor: pointer;">
+                    <td><img src="<%=grupos[i].imagem%>" onerror="if (this.src != 'img/error.png') this.src = 'img/error.png'" width="50px" height="50px"></td>
+                    <td class="title left"><%=grupos[i].nome%><%if (grupos[i].admin) {%> [ADMIN]<%} else if (grupos[i].mudo) {%> [MUDO]<%}%></td>
+                </tr>
+                <%}%>
+            </table>
+        </div>
     <%}%>
-    <a href="/criarGrupo">Criar grupo!</a>
+    <button class="fixedbutton button2" onclick="location.href='/criarGrupo'">+</button>
+    </div>
+    <div>
+    <h3>Convites:</h3>
+    <table>
+        <%for (let i=0; i<convites.length; i++) {%>
+            <tr>
+                <td><img src="<%=convites[i].imagem%>" onerror="if (this.src != 'img/error.png') this.src = 'img/error.png'" width="50px" height="50px"></td>
+                <td><%=convites[i].nome%></td>
+                <td><%if (convites[i].mudo == true) {%>(Mudo)<%}%></td>
+                <td><a class="nonlink" href='/convite?convite=<%=convites[i].convite%>&aceito=true'><button class="button">Aceitar</button></a> | <a href='/convite?convite=<%=convites[i].convite%>&aceito=false'><button class="button4">Negar</button></a></td>
+            </tr>
+        <%}%>
+    </table>
+    <button class="fixedtop button" onclick="location.href='/logout'">Logout</button>
+</div>
 </body>
 </html>

@@ -63,6 +63,17 @@ class GrupoDAO {
             console.log({ error });
         }
     }
+
+    static async apagar(grupo) {
+        const sql = "DELETE FROM grupos WHERE id = $1";
+        try {
+            await dbcon.query(sql, [grupo]);
+            return true;
+        } catch (error) {
+            console.log({ error });
+            return false;
+        }
+    }
 }
 
 module.exports = {

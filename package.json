@@ -1,23 +1,25 @@
 {
-  "name": "catalogo-filmes",
+  "name": "groupchat",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "dev": "SET PORT=3000 && nodemon src/index.js",
     "start": "node src/index.js"
   },
-  "author": "Vini",
+  "author": "Annie",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "ejs": "^3.1.7",
     "express": "^4.18.1",
     "express-session": "^1.17.2",
+    "materialize-css": "^1.0.0-rc.2",
     "nanoid": "^3.3.4",
     "pg": "^8.7.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
   },
+  "keywords": [],
   "description": ""
 }

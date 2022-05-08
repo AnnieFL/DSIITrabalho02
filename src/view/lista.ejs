@@ -1,0 +1,47 @@
+<%- include('includes/header') %>
+    <h1 class="center"><%=grupo.nome%></h1>
+        <%if (user.admin) {%>
+        <h1>Convidar:</h1>
+        <div class="fixedtop">
+            <form action="/ListaConvites/<%=grupo.id%>">
+                <input id="firstInput" type="submit" value="🔎">
+                <input id="secondInput" type="text" name="pesquisa" placeholder="Pesquisar...">
+            </form>
+        </div>
+        <table>
+            <%for (let i=0; i<otherUsers.length; i++) {%>
+                <tr>
+                    <form action="/convidar" method="post">
+                        <td>
+                            <label for="user"><span style="font-size: 2em"><%=otherUsers[i].nome%></span> <span style="font-size: 0.75em;">(<%=otherUsers[i].email%>)</span></label>
+                        </td>
+                        <td>
+                            <input type="hidden" name="user" value="<%=otherUsers[i].id%>">
+                        </td>
+                        <td>
+                            <input type="hidden" name="grupo" value="<%=grupo.id%>">
+                        </td>
+                        <td>
+                            <span style="border: 1px solid black;">
+                                <input type="checkbox" name="mudo">
+                                <label for="mudo">Mudo</label>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="submit" class='button' value="convidar!">
+                        </td>
+                    </form>
+                </tr>
+            <%}%>
+            </table>
+        <%}%>
+        </table>
+    </div>
+    <script>
+        window.onload = function() {
+            document.getElementById("textArea").focus();
+        }
+    </script>  <br><br>  
+    <a class='nonlink' style='font-size:20px;' href="/grupo/<%=grupo.id%>">< Voltar</a>
+</body>
+</html>

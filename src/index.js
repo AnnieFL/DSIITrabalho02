@@ -2,6 +2,8 @@
 const express = require('express');
 const app = express();
 
+app.use(express.static('../public'));
+
 app.set('view engine', 'ejs');
 app.set('views', './src/view');
 
@@ -27,14 +29,11 @@ const routes = require('./routes/routes');
 app.use('/', routes);
 
 app.use('*', (req, res) => {
-    return res.status(404).send(`
-        <h1>Sorry, not found!!!</h1>
-        <a href="/filmes">VOLTAR</a>
-    `);
+    return res.redirect('/');
 })
 
 const dbcon = require('./config/connection-db');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 console.log({PORT});
 app.listen(PORT, () => console.log(`Server iniciado na porta ${PORT}`));
