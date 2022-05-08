@@ -15,7 +15,8 @@
     "express-session": "^1.17.2",
     "materialize-css": "^1.0.0-rc.2",
     "nanoid": "^3.3.4",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "pj": "^0.3.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"

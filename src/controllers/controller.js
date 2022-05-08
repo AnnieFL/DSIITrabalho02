@@ -111,25 +111,30 @@ class Controller {
             const { id } = req.params;
             const grupo = await GrupoDAO.buscaPeloId(id);
             
-            const mainUser = await UserDAO.buscaPeloEmail(user);
-            const mainUserEx = await GrupoUserDAO.buscaPorAmbos([mainUser.id, grupo.id]);
+            if (grupo != undefined) {
 
-            if (grupo != [] && mainUserEx != []) {
-                const groupUsersIds = await GrupoUserDAO.buscaPeloGrupo(grupo.id);
-                const groupUsers = await UserDAO.buscaPelosIds(groupUsersIds);
-                for (let i = 0; i<groupUsersIds.length; i++) {
-                    groupUsers[i].grupoUser = groupUsersIds[i].id;
-                    groupUsers[i].mudo = groupUsersIds[i].mudo;
-                    groupUsers[i].admin = groupUsersIds[i].admin;
-                }
-    
-                mainUser.grupoUser = mainUserEx.id;
-                mainUser.mudo = mainUserEx.mudo;
-                mainUser.admin = mainUserEx.admin;
+                const mainUser = await UserDAO.buscaPeloEmail(user);
+                const mainUserEx = await GrupoUserDAO.buscaPorAmbos([mainUser.id, grupo.id]);
                 
-                const mensagens = await MensagemDAO.dentroDoGrupo(grupo.id);
-    
-                return res.render('grupo', { user:mainUser, grupo: grupo, mensagens: mensagens, groupUsers: groupUsers});
+                if (grupo != [] && mainUserEx != []) {
+                    const groupUsersIds = await GrupoUserDAO.buscaPeloGrupo(grupo.id);
+                    const groupUsers = await UserDAO.buscaPelosIds(groupUsersIds);
+                    for (let i = 0; i<groupUsersIds.length; i++) {
+                        groupUsers[i].grupoUser = groupUsersIds[i].id;
+                        groupUsers[i].mudo = groupUsersIds[i].mudo;
+                        groupUsers[i].admin = groupUsersIds[i].admin;
+                    }
+        
+                    mainUser.grupoUser = mainUserEx.id;
+                    mainUser.mudo = mainUserEx.mudo;
+                    mainUser.admin = mainUserEx.admin;
+                    
+                    const mensagens = await MensagemDAO.dentroDoGrupo(grupo.id);
+        
+                    return res.render('grupo', { user:mainUser, grupo: grupo, mensagens: mensagens, groupUsers: groupUsers});
+                } else {
+                    return res.redirect('/');
+                }
             } else {
                 return res.redirect('/');
             }

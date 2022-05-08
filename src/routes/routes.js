@@ -6,7 +6,7 @@ const routes = Router();
 
 const controller = new Controller();
 
-routes.get('/grupo/:id', controller.grupo);
+routes.get('/apagar/:id', controller.apagar);
 
 routes.get('/criarGrupo', controller.criarGrupo);
 
@@ -16,7 +16,7 @@ routes.get('/convite', controller.convite);
 
 routes.get('/sair/:id', controller.sair);
 
-routes.get('/apagar/:id', controller.apagar);
+routes.get('/grupo/:id', controller.grupo);
 
 routes.get('/mutar/:id', controller.mutar);
 
