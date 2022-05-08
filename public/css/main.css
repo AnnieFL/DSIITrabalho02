@@ -189,6 +189,13 @@ input {
     right: 0px; 
 }
 
+.fixedbottom {
+    position: fixed;
+    bottom: 0px;
+    padding: 10px;
+    left: 0px; 
+}
+
 .senderP{
     text-align: right;
     background-color: #008CBA;
