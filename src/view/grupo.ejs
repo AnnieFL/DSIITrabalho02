@@ -37,9 +37,9 @@
                     <tr>
                         <td><%=groupUsers[i].nome%></td>
                         <td><%=groupUsers[i].email%></td>
-                        <td><%if (groupUsers[i].mudo) {if (user.admin) {%><a class='nonlink' title='desmutar' href="/mutar/<%=groupUsers[i].grupoUser%>">[MUDO]</a><%} else {%>[MUDO]<%}} else if (groupUsers[i].admin){%>[ADMIN]<%} else if (user.admin) {%><a class="nonlink" title='mutar' href="/mutar/<%=groupUsers[i].grupoUser%>">[MEMBRO]</a><%} else {%>[MEMBRO]<%}%></td>
+                        <td><%if (groupUsers[i].mudo) {if (user.admin) {%><a title='desmutar' href="/mutar/<%=groupUsers[i].grupoUser%>">🔇</a><%} else {%>[MUDO]<%}} else if (groupUsers[i].admin){%>[ADMIN]<%} else if (user.admin) {%><a title='mutar' href="/mutar/<%=groupUsers[i].grupoUser%>">🔊</a><%} else {%>🔊<%}%></td>
                         <%if (user.admin) {%>
-                            <td><a class='nonlink' href="/sair/<%=groupUsers[i].grupoUser%>" title="Kickar">👢</a></td>
+                            <td><a href="/sair/<%=groupUsers[i].grupoUser%>" title="Kickar">👢</a></td>
                         <%} else {%>
                             <td></td>
                         <%}%>
